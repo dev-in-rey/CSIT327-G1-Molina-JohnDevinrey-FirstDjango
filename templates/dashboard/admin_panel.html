@@ -1,2 +1,82 @@
 {% extends "base.html" %}
-{% block content %}<h2>Admin Panel</h2>{% endblock %}
+
+{% block title %}CampusConnect — Administration{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-9 col-xl-8">
+
+        <!-- Breadcrumb & Header -->
+        <div class="mb-3">
+            <a href="{% url 'dashboard' %}" class="text-decoration-none text-muted small">
+                &larr; Return to Dashboard
+            </a>
+        </div>
+
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-baseline pb-3 mb-4 border-bottom">
+            <div>
+                <h1 class="h3 mb-1">Administration Console</h1>
+                <p class="text-muted small mb-0">System oversight &middot; Restricted to administrative staff</p>
+            </div>
+            <div class="mt-2 mt-sm-0">
+                <span class="role-tag role-tag-ADMIN">Administrator Access</span>
+            </div>
+        </div>
+
+        <!-- Administrative Panel -->
+        <div class="panel mb-4">
+            <div class="panel-header d-flex justify-content-between align-items-center">
+                <h2 class="h5 mb-0">System Information &amp; Controls</h2>
+                <span class="text-muted small">Session: #{{ user.id }} ({{ user.username }})</span>
+            </div>
+
+            <div class="panel-body">
+                <dl class="row mb-0">
+                    <div class="col-12 record-row">
+                        <div class="row align-items-center">
+                            <dt class="col-sm-4 meta-label">Authenticated Staff</dt>
+                            <dd class="col-sm-8 meta-value mb-0 font-monospace">
+                                {{ user.username }} &middot; {{ user.email|default:"No email set" }}
+                            </dd>
+                        </div>
+                    </div>
+
+                    <div class="col-12 record-row">
+                        <div class="row align-items-center">
+                            <dt class="col-sm-4 meta-label">Authorization Role</dt>
+                            <dd class="col-sm-8 meta-value mb-0">
+                                {{ user.get_role_display }} (Full Administrative Privileges)
+                            </dd>
+                        </div>
+                    </div>
+
+                    <div class="col-12 record-row">
+                        <div class="row align-items-center">
+                            <dt class="col-sm-4 meta-label">System Module</dt>
+                            <dd class="col-sm-8 meta-value mb-0">
+                                CSIT327 &middot; CampusConnect Core Portal
+                            </dd>
+                        </div>
+                    </div>
+
+                    <div class="col-12 record-row">
+                        <div class="row align-items-center">
+                            <dt class="col-sm-4 meta-label">Database Control</dt>
+                            <dd class="col-sm-8 meta-value mb-0">
+                                <a href="/admin/" class="btn btn-portal btn-sm">
+                                    Open Django Admin Site &rarr;
+                                </a>
+                            </dd>
+                        </div>
+                    </div>
+                </dl>
+            </div>
+
+            <div class="panel-footer text-muted small">
+                Notice: All actions performed within administrative sessions are logged for audit and compliance.
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,15 +1,113 @@
 {% extends "base.html" %}
 
-{% block content %}
-<h2>Welcome, {{ user.first_name|default:user.username}}!</h2>
-<ul>
-    <li>Role: {{ user.get_role_display }}</li>
-    <li>Course: {{ user.course|default:"Not set" }}</li>
-    <li>Member since: {{ member_count }}</li>
-    <li>Last login: {{ user.last_login|date:"M, d, Y" }}</li>
-</ul>
-{% if is_admin %}
-    <a href="{% url 'admin_panel' %}">Open admin panel</a>
-{% endif %}
-{% endblock %}
+{% block title %}CampusConnect — Dashboard{% endblock %}
 
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-9 col-xl-8">
+        
+        <!-- Header -->
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-baseline pb-3 mb-4 border-bottom">
+            <div>
+                <h1 class="h3 mb-1">
+                    Welcome, {{ user.first_name|default:user.username }}
+                </h1>
+                <p class="text-muted small mb-0">
+                    Cebu Institute of Technology - University &middot; Academic Portal Overview
+                </p>
+            </div>
+            <div class="mt-3 mt-sm-0 d-flex gap-2">
+                <a href="{% url 'profile_edit' %}" class="btn btn-portal btn-sm">
+                    Edit Profile
+                </a>
+                {% if is_admin %}
+                    <a href="{% url 'admin_panel' %}" class="btn btn-outline-danger btn-sm">
+                        Admin Panel
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Main Institutional Record Panel -->
+        <div class="panel mb-4">
+            <div class="panel-header d-flex justify-content-between align-items-center">
+                <div>
+                    <h2 class="h5 mb-0">Academic &amp; Account Record</h2>
+                    <span class="text-muted small">Registered profile credentials</span>
+                </div>
+                <span class="role-tag role-tag-{{ user.role }}">
+                    {{ user.get_role_display }}
+                </span>
+            </div>
+
+            <div class="panel-body">
+                <dl class="row mb-0">
+                    <div class="col-12 record-row">
+                        <div class="row align-items-center">
+                            <dt class="col-sm-4 meta-label">Full Name</dt>
+                            <dd class="col-sm-8 meta-value mb-0">
+                                {% if user.first_name or user.last_name %}
+                                    {{ user.first_name }} {{ user.last_name }}
+                                {% else %}
+                                    <span class="text-muted fst-italic">Not specified</span>
+                                {% endif %}
+                            </dd>
+                        </div>
+                    </div>
+
+                    <div class="col-12 record-row">
+                        <div class="row align-items-center">
+                            <dt class="col-sm-4 meta-label">Username</dt>
+                            <dd class="col-sm-8 meta-value mb-0 font-monospace">
+                                {{ user.username }}
+                            </dd>
+                        </div>
+                    </div>
+
+                    <div class="col-12 record-row">
+                        <div class="row align-items-center">
+                            <dt class="col-sm-4 meta-label">Enrolled Course / Program</dt>
+                            <dd class="col-sm-8 meta-value mb-0">
+                                {{ user.course|default:"Not specified" }}
+                            </dd>
+                        </div>
+                    </div>
+
+                    <div class="col-12 record-row">
+                        <div class="row align-items-center">
+                            <dt class="col-sm-4 meta-label">Email Address</dt>
+                            <dd class="col-sm-8 meta-value mb-0">
+                                {{ user.email|default:"Not specified" }}
+                            </dd>
+                        </div>
+                    </div>
+
+                    <div class="col-12 record-row">
+                        <div class="row align-items-center">
+                            <dt class="col-sm-4 meta-label">Last System Login</dt>
+                            <dd class="col-sm-8 meta-value mb-0">
+                                {{ user.last_login|date:"F d, Y &middot; g:i A"|default:"First login" }}
+                            </dd>
+                        </div>
+                    </div>
+
+                    <div class="col-12 record-row">
+                        <div class="row align-items-center">
+                            <dt class="col-sm-4 meta-label">Campus Membership</dt>
+                            <dd class="col-sm-8 meta-value mb-0">
+                                {{ member_count }} registered member{{ member_count|pluralize }}
+                            </dd>
+                        </div>
+                    </div>
+                </dl>
+            </div>
+
+            <div class="panel-footer d-flex justify-content-between align-items-center text-muted small">
+                <span>Account ID: #{{ user.id }}</span>
+                <span>Role: {{ user.get_role_display }}</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
