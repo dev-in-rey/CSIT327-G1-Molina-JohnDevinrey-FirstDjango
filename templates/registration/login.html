@@ -17,7 +17,7 @@
 
             <div class="panel-body">
                 {% if form.non_field_errors %}
-                    <div class="alert-portal alert-portal-danger mb-3">
+                    <div class="alert alert-danger alert-portal alert-portal-danger mb-3" role="alert">
                         {% for error in form.non_field_errors %}
                             <div>{{ error }}</div>
                         {% endfor %}

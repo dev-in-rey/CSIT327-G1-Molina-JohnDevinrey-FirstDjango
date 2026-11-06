@@ -1,4 +1,3 @@
-# Python / Django
 __pycache__/
 *.py[cod]
 *$py.class
@@ -8,10 +7,25 @@ db.sqlite3-journal
 .venv/
 env/
 venv/
+ENV/
 *.log
 local_settings.py
-
-# Agent / AI / Impeccable folders
+staticfiles/
+.env
+*.env
+.env.*
+*.pem
+*.key
+secrets.*
+test_rubric.py
+*rubric*
+tests.py
+test_*.py
+*_test.py
+.pytest_cache/
+.coverage
+htmlcov/
+requirements.txt
 .agent/
 agent/
 .gemini/
@@ -20,10 +34,15 @@ gemini/
 impeccable/
 .skills/
 skills/
-
-# Editor & OS files
+.cursor/
+.claude/
+.windsurf/
+.copilot/
+.aider*
+CLAUDE.md
+AGENTS.md
+GEMINI.md
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
-

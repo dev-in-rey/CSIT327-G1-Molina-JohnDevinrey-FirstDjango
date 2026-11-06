@@ -1,24 +1,42 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import CustomUser
 
-class CustomerUserCreationForm(UserCreationForm):
+
+class BootstrapFormMixin:
+    def _apply_bootstrap_classes(self):
+        for name, field in self.fields.items():
+            css = field.widget.attrs.get("class", "")
+            classes = css.split() if css else []
+            if "form-control" not in classes:
+                classes.append("form-control")
+            if self.is_bound and self.errors.get(name):
+                if "is-invalid" not in classes:
+                    classes.append("is-invalid")
+            field.widget.attrs["class"] = " ".join(classes)
+
+
+class CustomAuthenticationForm(BootstrapFormMixin, AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._apply_bootstrap_classes()
+
+
+class CustomerUserCreationForm(BootstrapFormMixin, UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = CustomUser
         fields = ("username", "email", "first_name", "last_name", "course")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field in self.fields.values():
-            field.widget.attrs.setdefault("class", "form-control")
+        self._apply_bootstrap_classes()
 
 
-class ProfileUpdateForm(forms.ModelForm):
+class ProfileUpdateForm(BootstrapFormMixin, forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ("first_name", "last_name", "email", "course")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field in self.fields.values():
-            field.widget.attrs.setdefault("class", "form-control")
+        self._apply_bootstrap_classes()

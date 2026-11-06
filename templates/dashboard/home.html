@@ -6,7 +6,6 @@
 <div class="row justify-content-center">
     <div class="col-12 col-lg-9 col-xl-8">
         
-        <!-- Header -->
         <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-baseline pb-3 mb-4 border-bottom">
             <div>
                 <h1 class="h3 mb-1">
@@ -17,6 +16,9 @@
                 </p>
             </div>
             <div class="mt-3 mt-sm-0 d-flex gap-2">
+                <a href="{% url 'profile' %}" class="btn btn-outline-portal btn-sm">
+                    My Profile
+                </a>
                 <a href="{% url 'profile_edit' %}" class="btn btn-portal btn-sm">
                     Edit Profile
                 </a>
@@ -28,7 +30,6 @@
             </div>
         </div>
 
-        <!-- Main Institutional Record Panel -->
         <div class="panel mb-4">
             <div class="panel-header d-flex justify-content-between align-items-center">
                 <div>

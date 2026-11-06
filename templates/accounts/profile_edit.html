@@ -6,25 +6,27 @@
 <div class="row justify-content-center">
     <div class="col-12 col-md-9 col-lg-7">
 
-        <!-- Navigation Breadcrumb -->
         <div class="mb-3">
-            <a href="{% url 'dashboard' %}" class="text-decoration-none text-muted small">
-                &larr; Back to Dashboard
+            <a href="{% url 'profile' %}" class="text-decoration-none text-muted small">
+                &larr; Back to My Profile
             </a>
         </div>
 
-        <!-- Edit Form Panel -->
         <div class="panel">
-            <div class="panel-header">
-                <h1 class="h4 mb-1">Edit Profile Details</h1>
-                <p class="text-muted small mb-0">Update your academic record information below.</p>
+            <div class="panel-header d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="h4 mb-1">Edit Profile Details</h1>
+                    <p class="text-muted small mb-0">View and update your academic record information below.</p>
+                </div>
+                <span class="role-tag role-tag-{{ user.role }}">
+                    {{ user.get_role_display }}
+                </span>
             </div>
 
             <div class="panel-body">
-                <!-- Academic Identity Notice -->
                 <div class="p-3 mb-4 border rounded-1 bg-light text-muted small">
-                    <div class="row">
-                        <div class="col-sm-6 mb-1 mb-sm-0">
+                    <div class="row g-2">
+                        <div class="col-sm-6">
                             <span class="text-uppercase fw-semibold d-block" style="font-size: 0.7rem; letter-spacing: 0.05em;">Username</span>
                             <span class="text-dark font-monospace">{{ user.username }}</span>
                         </div>
@@ -32,11 +34,19 @@
                             <span class="text-uppercase fw-semibold d-block" style="font-size: 0.7rem; letter-spacing: 0.05em;">Assigned Role</span>
                             <span class="text-dark">{{ user.get_role_display }}</span>
                         </div>
+                        <div class="col-sm-6">
+                            <span class="text-uppercase fw-semibold d-block" style="font-size: 0.7rem; letter-spacing: 0.05em;">Current Full Name</span>
+                            <span class="text-dark">{{ user.get_full_name|default:"Not specified" }}</span>
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="text-uppercase fw-semibold d-block" style="font-size: 0.7rem; letter-spacing: 0.05em;">Current Program</span>
+                            <span class="text-dark">{{ user.course|default:"Not specified" }}</span>
+                        </div>
                     </div>
                 </div>
 
                 {% if form.non_field_errors %}
-                    <div class="alert-portal alert-portal-danger mb-3">
+                    <div class="alert alert-danger alert-portal alert-portal-danger mb-3" role="alert">
                         {% for error in form.non_field_errors %}
                             <div>{{ error }}</div>
                         {% endfor %}
@@ -53,7 +63,7 @@
                             </label>
                             {{ form.first_name }}
                             {% if form.first_name.errors %}
-                                <div class="text-danger small mt-1">
+                                <div class="invalid-feedback d-block text-danger small mt-1">
                                     {% for error in form.first_name.errors %}{{ error }}{% endfor %}
                                 </div>
                             {% endif %}
@@ -65,7 +75,7 @@
                             </label>
                             {{ form.last_name }}
                             {% if form.last_name.errors %}
-                                <div class="text-danger small mt-1">
+                                <div class="invalid-feedback d-block text-danger small mt-1">
                                     {% for error in form.last_name.errors %}{{ error }}{% endfor %}
                                 </div>
                             {% endif %}
@@ -78,7 +88,7 @@
                         </label>
                         {{ form.email }}
                         {% if form.email.errors %}
-                            <div class="text-danger small mt-1">
+                            <div class="invalid-feedback d-block text-danger small mt-1">
                                 {% for error in form.email.errors %}{{ error }}{% endfor %}
                             </div>
                         {% endif %}
@@ -93,7 +103,7 @@
                             e.g. Bachelor of Science in Information Technology (BSIT)
                         </div>
                         {% if form.course.errors %}
-                            <div class="text-danger small mt-1">
+                            <div class="invalid-feedback d-block text-danger small mt-1">
                                 {% for error in form.course.errors %}{{ error }}{% endfor %}
                             </div>
                         {% endif %}
@@ -103,7 +113,7 @@
                         <button type="submit" class="btn btn-portal">
                             Save Changes
                         </button>
-                        <a href="{% url 'dashboard' %}" class="btn btn-outline-portal">
+                        <a href="{% url 'profile' %}" class="btn btn-outline-portal">
                             Cancel
                         </a>
                     </div>
